@@ -47,22 +47,22 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      better-defaults
      emacs-lisp
      (git :variables
           git-enable-magit-delta-plugin t
           git-enable-magit-gitflow-plugin t)
      helm
-     ;; lsp
-     ;; markdown
+     lsp
+     markdown
      multiple-cursors
      ;; org
      (shell :variables
             shell-default-shell 'vterm
             shell-enable-smart-eshell t)
-     ;; spell-checking
-     ;; syntax-checking
+     spell-checking
+     syntax-checking
      ;; version-control
      (c-c++ :variables 
             c-c++-backend 'lsp-clangd
@@ -77,8 +77,12 @@ This function should only modify configuration layer settings."
      meson
      eaf
      chrome
+     chinese
+     unicode-fonts
      (treemacs :variables
-               treemacs-use-git-mode 'deferred))
+               treemacs-use-git-mode 'deferred
+               treemacs-use-filewatch-mode t
+               treemacs-use-all-the-icons-theme t))
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -440,7 +444,7 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -589,6 +593,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (display-time-mode t)
 )
 
 
