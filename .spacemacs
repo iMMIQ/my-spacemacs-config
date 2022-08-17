@@ -61,7 +61,7 @@ This function should only modify configuration layer settings."
      (shell :variables
             shell-default-shell 'vterm
             shell-enable-smart-eshell t)
-     spell-checking
+     ; spell-checking
      syntax-checking
      ;; version-control
      (c-c++ :variables 
@@ -82,7 +82,8 @@ This function should only modify configuration layer settings."
      (treemacs :variables
                treemacs-use-git-mode 'deferred
                treemacs-use-filewatch-mode t
-               treemacs-use-all-the-icons-theme t))
+               ; treemacs-use-all-the-icons-theme t
+               ))
 
 
    ;; List of additional packages that will be installed without being wrapped
