@@ -75,10 +75,7 @@ This function should only modify configuration layer settings."
             c-c++-adopt-subprojects t
             c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-enable-clang-format-on-save t
-            c-c++-enable-organize-includes-on-save t
-            c-c++-enable-google-style t
-            c-c++-enable-google-newline t
-            c-c++-enable-auto-newline t)
+            c-c++-enable-google-style t)
      meson
      ;; eaf
      ;; chrome
