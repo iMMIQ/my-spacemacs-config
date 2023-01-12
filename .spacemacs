@@ -75,8 +75,8 @@ This function should only modify configuration layer settings."
             c-c++-enable-google-newline t
             c-c++-enable-auto-newline t)
      meson
-     eaf
-     chrome
+     ;; eaf
+     ;; chrome
      chinese
      unicode-fonts
      (treemacs :variables
@@ -577,6 +577,11 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq-default git-magit-status-fullscreen t)
+  (setq configuration-layer-elpa-archives
+    '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+  (setq evil-want-keybinding nil)
 )
 
 
