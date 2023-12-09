@@ -2,14 +2,14 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
-(setq url-proxy-services
-      '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
-        ("http" . "127.0.0.1:7890")
-        ("https" . "127.0.0.1:7890")))
+;; (setq url-proxy-services
+;;       '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
+;;         ("http" . "127.0.0.1:7890")
+;;         ("https" . "127.0.0.1:7890")))
 
-(setq eaf-proxy-type "http")
-(setq eaf-proxy-host "127.0.0.1")
-(setq eaf-proxy-port "7890")
+;; (setq eaf-proxy-type "http")
+;; (setq eaf-proxy-host "127.0.0.1")
+;; (setq eaf-proxy-port "7890")
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -47,8 +47,9 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ansible
      (auto-completion :variables
-     		      auto-completion-enable-help-tooltip t)
+              auto-completion-enable-help-tooltip t)
      better-defaults
      cmake
      emacs-lisp
@@ -56,20 +57,24 @@ This function should only modify configuration layer settings."
           git-enable-magit-delta-plugin t
           git-enable-magit-gitflow-plugin t)
      helm
-     html
      (lsp :variables
           lsp-lens-enable t
           lsp-headerline-breadcrumb-segments '(project file symbols))
-     markdown
      multiple-cursors
-     ;; org
+     (org :variables
+          org-enable-modern-support t)
+     (python :variables
+             python-backend 'lsp
+             python-test-runner 'pytest
+             python-formatter 'lsp
+             python-format-on-save t
+             python-fill-column 119
+             python-sort-imports-on-save t)
      (shell :variables
-            shell-default-shell 'vterm
             shell-enable-smart-eshell t)
      ;; spell-checking
      syntax-checking
-     ;; version-control
-     (c-c++ :variables 
+     (c-c++ :variables
             c-c++-backend 'lsp-clangd
             c-c++-dap-adapters 'dap-lldb
             c-c++-adopt-subprojects t
@@ -77,14 +82,11 @@ This function should only modify configuration layer settings."
             c-c++-enable-clang-format-on-save t
             c-c++-enable-google-style t)
      meson
-     ;; eaf
-     ;; chrome
      chinese
-     unicode-fonts
+     ;; unicode-fonts
      (treemacs :variables
                treemacs-use-git-mode 'deferred
                treemacs-use-filewatch-mode t
-               ; treemacs-use-all-the-icons-theme t
                ))
 
 
@@ -521,7 +523,7 @@ It should only modify the values of Spacemacs settings."
    ;; Color highlight trailing whitespace in all prog-mode and text-mode derived
    ;; modes such as c++-mode, python-mode, emacs-lisp, html-mode, rst-mode etc.
    ;; (default t)
-   dotspacemacs-show-trailing-whitespace t 
+   dotspacemacs-show-trailing-whitespace t
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
    ;; to aggressively delete empty line and long sequences of whitespace,
@@ -578,8 +580,14 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (setq-default git-magit-status-fullscreen t)
-  (setq evil-want-keybinding nil)
+  (setq configuration-layer--elpa-archives
+    '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+      ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")))
+
+  (custom-set-variables '(spacemacs-theme-custom-colors
+                          '((bg1 . nil))))
 )
 
 
@@ -598,6 +606,9 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (display-time-mode t)
+  (setq-default git-magit-status-fullscreen t)
+  (setq evil-want-keybinding nil)
+  (add-hook 'before-save-hook 'whitespace-cleanup)
 )
 
 
@@ -614,7 +625,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(add-node-modules-path company-web web-completion-data counsel-css counsel swiper ivy emmet-mode helm-css-scss impatient-mode htmlize simple-httpd prettier-js pug-mode sass-mode haml-mode scss-mode slim-mode tagedit web-beautify web-mode xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree queue toc-org spaceline powerline smeargle shell-pop restart-emacs rainbow-delimiters pyim xr popwin persp-mode pcre2el paradox spinner pangu-spacing orgit org-plus-contrib org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup magit magit-section macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio git-timemachine git-messenger git-link git-commit with-editor transient compat gh-md fuzzy flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx find-by-pinyin-dired fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu evil goto-chg eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump s disaster diminish define-word company-statistics company-c-headers company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol ht dash auto-compile aggressive-indent adaptive-wrap ace-window ace-pinyin pinyinlib ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup))
+   '(ansible ansible-doc company-ansible jinja2-mode yaml-mode xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree queue toc-org spaceline powerline smeargle shell-pop restart-emacs rainbow-delimiters pyim xr popwin persp-mode pcre2el paradox spinner pangu-spacing orgit org-plus-contrib org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup magit magit-section macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio git-timemachine git-messenger git-link git-commit with-editor transient compat gh-md fuzzy flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx find-by-pinyin-dired fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu evil goto-chg eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump s disaster diminish define-word company-statistics company-c-headers company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol ht dash auto-compile aggressive-indent adaptive-wrap ace-window ace-pinyin pinyinlib ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup))
+ '(spacemacs-theme-custom-colors '((bg1)))
  '(warning-suppress-log-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
